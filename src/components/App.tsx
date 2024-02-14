@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import '../styles/App.scss';
 import Card from './Card';
 import getImg from "../apiInteract";
-import { shuffle } from 'lodash';
+import { max, shuffle } from 'lodash';
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res:any = await getImg(5);
+      const res:any = await getImg(8);
       setItems(res.items);
     };
 
@@ -21,8 +21,16 @@ function App() {
 
   return (
     <>
+    <header>
+      <div className="header-text">AniMemory</div>
+      <div className="scores">
+        <div className="score-text">Score: {score}</div>
+        <div className="max-score-text">Best score: {maxScore}</div>
+      </div>
+    </header>
+    <div className='main-container'>
       {items.length > 0 ? (
-        <div className='container'>
+        <div className='cards-container'>
           {shuffle(items).map((elem) => (
               <Card imgUrl={elem.image_url} score={score} setScore={setScore} setMaxScore={setMaxScore} key={elem.id}/>
           ))}
@@ -30,6 +38,7 @@ function App() {
       ) : (
         <p>Loading...</p>
       )}
+    </div>
     </>
   );
 }

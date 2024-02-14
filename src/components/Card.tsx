@@ -17,9 +17,9 @@ function Card({ imgUrl, score, setScore, setMaxScore } : { imgUrl: string, score
   }
 
   return (
-    <div className="card" onClick={() => handleClick()}>
-      <img src={imgUrl} alt="neko" />
-    </div>
+    // <div className="card" >
+      <img src={imgUrl} alt="neko" onClick={() => handleClick()}/>
+    // </div>
   );
 }
 

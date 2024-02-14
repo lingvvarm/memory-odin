@@ -1,3 +1,46 @@
+body {
+    background-color: #212121;
+}
+
+header {
+    background-color: #121212;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+}
+
+.header-text {
+    font-size: 36px;
+}
+
+.scores {
+    font-size: 20px;
+}
+
+.main-container {
+    padding: 30px;
+}
+
+.cards-container {
+    // display: grid;
+    // grid-template-columns: repeat(4, minmax(300px, 1fr));
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+}
+
+
 .card {
     width: 300px;
     height: 300px;
