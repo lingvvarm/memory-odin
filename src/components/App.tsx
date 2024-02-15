@@ -11,11 +11,11 @@ function App() {
   const [maxScore, setMaxScore] = useState(0);
   const [reset, setReset] = useState(false);
   const [infoText, setInfoText] = useState('To refresh, choose difficulty and press Go');
-  const cardsAmountRef = useRef<HTMLInputElement | null>(8);
+  const cardsAmountRef = useRef<HTMLInputElement | null >(8);
 
 
   useEffect(() => {
-    if (score === Number(cardsAmountRef.current.value)) {
+    if (score === Number(cardsAmountRef?.current?.value)) {
       setInfoText('You won! Images were refreshed');
       setMaxScore((maxScore: number) => Math.max(score, maxScore));
       setScore(0);
