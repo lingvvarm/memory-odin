@@ -1,17 +1,18 @@
 import { useState } from "react";
 
-function Card({ imgUrl, score, setScore, setMaxScore } : { imgUrl: string, score: number, setScore: any, setMaxScore: any }) {
-  const [clicked, SetClicked] = useState(false);
+function Card({ imgUrl, score, setScore, setMaxScore, setInfoText } : { imgUrl: string, score: number, setScore: any, setMaxScore: any, setInfoText: any }) {
+  const [clicked, setClicked] = useState(false);
 
   function handleClick() {
     if (clicked) {
-      alert('I was already clicked!');
+      setInfoText('You lost. Try again!')
       setMaxScore((maxScore: number) => Math.max(score, maxScore));
       setScore(0);
-      SetClicked(false);
+      setClicked(false);
     }
     else {
-      SetClicked(true);
+      setInfoText('To refresh, choose difficulty and press Go');
+      setClicked(true);
       setScore((score: number) => score + 1);
     }
   }

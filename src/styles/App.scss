@@ -1,5 +1,6 @@
 body {
     background-color: #212121;
+    overflow: hidden;
 }
 
 header {
@@ -36,6 +37,7 @@ header {
         width: calc(100% / var(--cards-per-row) - 25px);
         height: calc(100% / var(--cards-per-column) - 25px);
         object-fit: cover;
+        object-position: 50% 20%;
         border-radius: 20px;
         cursor: pointer;
         transition: transform 0.1s;
@@ -93,4 +95,16 @@ header {
     .error-text {
         font-size: 12px;
     }
+}
+
+.header-and-info, .options-and-score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 80px;
+}
+
+.loading-text {
+    font-size: 24px;
+    color: white;
 }

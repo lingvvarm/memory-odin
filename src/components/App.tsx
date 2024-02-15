@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import '../styles/App.scss';
 import Card from './Card';
 import getImg from "../apiInteract";
-import { max, shuffle } from 'lodash';
+import { shuffle } from 'lodash';
 
 
 function App() {
@@ -10,7 +10,18 @@ function App() {
   const [score, setScore] = useState(0);
   const [maxScore, setMaxScore] = useState(0);
   const [reset, setReset] = useState(false);
-  const cardsAmountRef = useRef<HTMLInputElement | null>(null);
+  const [infoText, setInfoText] = useState('To refresh, choose difficulty and press Go');
+  const cardsAmountRef = useRef<HTMLInputElement | null>(8);
+
+
+  useEffect(() => {
+    if (score === Number(cardsAmountRef.current.value)) {
+      setInfoText('You won! Images were refreshed');
+      setMaxScore((maxScore: number) => Math.max(score, maxScore));
+      setScore(0);
+      setReset(true);
+    }
+  }, [score])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,30 +41,34 @@ function App() {
   return (
     <>
     <header>
-      <div className="header-text">AniMemory</div>
-      <div className="info-text">Choose difficulty and press Go:</div>
-      <div className="options-block">
-        <p className="difficulty-label">Difficulty</p>
-        <div className="difficulty-and-reset">
-          <input type="number" ref={cardsAmountRef} defaultValue={8}/>
-          <button type='button' onClick={() => setReset(true)}>Go</button>
-        </div>
-          <div className="error-text">Difficulty must be between 2 and 30</div>        
+      <div className="header-and-info">
+        <div className="header-text">AniMemory</div>
+        <div className="info-text">{infoText}</div>
       </div>
-      <div className="scores">
-        <div className="score-text">Score: {score}</div>
-        <div className="max-score-text">Best score: {maxScore}</div>
+      <div className="options-and-score">
+        <div className="options-block">
+          <p className="difficulty-label">Difficulty</p>
+          <div className="difficulty-and-reset">
+            <input type="number" ref={cardsAmountRef} defaultValue={8}/>
+            <button type='button' onClick={() => setReset(true)}>Go</button>
+          </div>
+            <div className="error-text">Difficulty must be between 2 and 30</div>
+        </div>
+        <div className="scores">
+          <div className="score-text">Score: {score}</div>
+          <div className="max-score-text">Best score: {maxScore}</div>
+        </div>
       </div>
     </header>
     <div className='main-container'>
       {items.length > 0 ? (
         <div className='cards-container' style={{ '--cards-per-row': Math.ceil(Math.sqrt(items.length)), '--cards-per-column': Math.ceil(items.length / Math.ceil(Math.sqrt(items.length)))}}>
           {shuffle(items).map((elem) => (
-              <Card imgUrl={elem.image_url} score={score} setScore={setScore} setMaxScore={setMaxScore} key={elem.id}/>
+              <Card imgUrl={elem.image_url} score={score} setScore={setScore} setMaxScore={setMaxScore} setInfoText={setInfoText} key={elem.id}/>
           ))}
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className='loading-text'>Loading...</p>
       )}
     </div>
     </>
