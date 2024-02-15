@@ -11,7 +11,7 @@ function App() {
   const [maxScore, setMaxScore] = useState(0);
   const [reset, setReset] = useState(false);
   const [infoText, setInfoText] = useState('To refresh, choose difficulty and press Go');
-  const cardsAmountRef = useRef<HTMLInputElement | null>(8);
+  const cardsAmountRef = useRef<HTMLInputElement | null>(null);
 
 
   useEffect(() => {
@@ -26,14 +26,14 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       if (cardsAmountRef.current) {
-        if (!cardsAmountRef.current.value) cardsAmountRef.current.value = 8;
-        if (cardsAmountRef.current.value < 2) cardsAmountRef.current.value = 2;
-        if (cardsAmountRef.current.value > 30) cardsAmountRef.current.value = 30;
+        if (!cardsAmountRef.current.value) cardsAmountRef.current.value = '8';
+        if (Number(cardsAmountRef.current.value) < 2) cardsAmountRef.current.value = '2';
+        if (Number(cardsAmountRef.current.value) > 30) cardsAmountRef.current.value = '30';
       }
       const res:any = await getImg(parseInt(cardsAmountRef.current?.value || '8', 10));
       setItems(res.items);
     };
-
+    setScore(0);
     fetchData();
     setReset(false);
   }, [reset]);
@@ -62,7 +62,10 @@ function App() {
     </header>
     <div className='main-container'>
       {items.length > 0 ? (
-        <div className='cards-container' style={{ '--cards-per-row': Math.ceil(Math.sqrt(items.length)), '--cards-per-column': Math.ceil(items.length / Math.ceil(Math.sqrt(items.length)))}}>
+        <div className='cards-container' style={{
+          '--cards-per-row': Math.ceil(Math.sqrt(items.length)),
+          '--cards-per-column': Math.ceil(items.length / Math.ceil(Math.sqrt(items.length))),
+        } as React.CSSProperties}>
           {shuffle(items).map((elem) => (
               <Card imgUrl={elem.image_url} score={score} setScore={setScore} setMaxScore={setMaxScore} setInfoText={setInfoText} key={elem.id}/>
           ))}
