@@ -9,6 +9,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px;
+    height: 90px;
 }
 
 .header-text {
@@ -20,33 +21,76 @@ header {
 }
 
 .main-container {
-    padding: 30px;
+    padding: 10px;
+    height: calc(100vh - 90px);
 }
 
 .cards-container {
-    // display: grid;
-    // grid-template-columns: repeat(4, minmax(300px, 1fr));
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 25px;
+    height: 100%;
 
     img {
-        width: 300px;
-        height: 300px;
+        width: calc(100% / var(--cards-per-row) - 25px);
+        height: calc(100% / var(--cards-per-column) - 25px);
         object-fit: cover;
         border-radius: 20px;
         cursor: pointer;
+        transition: transform 0.1s;
+    }
+
+    img:hover {
+        transform: scale(1.05);
+        box-shadow: 3px 3px 14px -1px rgba(255,255,255,1);  
     }
 }
 
+.info-text {
+    font-size: 24px;
+}
 
-.card {
-    width: 300px;
-    height: 300px;
+.difficulty-and-reset {
+    display: flex;
+    gap: 10px;
 
-    img {
-        width: 100%;
-        height: 100%;
+    input {
+        padding: 5px;
+        border-radius: 5px;
+        background-color: whitesmoke;
+        border: none;
+    }
+
+    button {
+        padding: 5px;
+        width: 70px;
+        background-color: gray;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #7A7A7A;
+    }
+
+    button:active {
+        background-color: #666666;
+    }
+}
+
+.options-block {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    .difficulty-label {
+        font-size: 15px;
+    }
+
+    .error-text {
+        font-size: 12px;
     }
 }
